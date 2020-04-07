@@ -1,0 +1,8 @@
+{
+    "browser": "edge",
+    "driverPath": "./drivers/msedgedriver.exe",
+    "urlApp": "https://dedicaciones.practia.global",
+    "defaultWait": 30,
+    "incognito": true,
+    "headless": true
+}
