@@ -1,21 +1,32 @@
-import unittest
-from core.driver import WebDriver
-from core.config import ConfigHelper
-
+from Lib import unittest
+from steps.HomeSteps import HomeSteps
+from core.driver.WebDriver import WebDriver
+import time
 
 class HelloWorld(unittest.TestCase):
 
-    
-    def setUp(self):
-        ConfigHelper
-        self.driver = WebDriver.WebDriver().getInstance()
+    def test_aboutUsValid(self):
+        HomeSteps().verifyAboutUsButton().clickOnAboutUs()
 
-    def test_home_screen(self):
-        pass
+    def test_aboutUsQuotes(self):
+        HomeSteps().verifyAboutUsButton().mouseOnAboutUs().clickOnQuotesOption()
+
+    def test_getText(self):
+        HomeSteps().verifyTextLearnMore()
+
+    def test_moveUntil(self):
+        HomeSteps().moveUntilStatusLink()
+
+    def test_goTo(self):
+        HomeSteps().goTo("http://www.practia.global/practia-academy/Paginas/default.aspx")
+        
+    def test_verifyElementInsideFrame(self):
+        HomeSteps().goTo("https://demoqa.com/iframe-practice-page/")\
+            .moveUntilIFramePracticeOption().verifyTitleFrame()\
+                .clickOnSeleniumInJavaOption().verifySeleniumTutorial()
 
     def tearDown(self):
-        pass
+        WebDriver.closeDriver()
 
-
-if __name__ == '__main__':
+if __name__ == '__main__':  
     unittest.main()

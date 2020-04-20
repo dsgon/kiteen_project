@@ -1,8 +1,8 @@
 {
-    "browser": "edge",
-    "driverPath": "./drivers/msedgedriver.exe",
-    "urlApp": "https://dedicaciones.practia.global",
-    "defaultWait": 30,
-    "incognito": true,
-    "headless": true
+    "browser": "chrome",
+    "driverPath": "./drivers/chromedriver.exe",
+    "urlApp": "https://python.org",
+    "defaultWait": 60,
+    "incognito": false,
+    "headless": false
 }

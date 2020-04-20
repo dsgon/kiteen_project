@@ -1,4 +1,4 @@
-import json
+from Lib import json
 
 browser = None
 driverPath = None
