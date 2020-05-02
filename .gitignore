@@ -101,3 +101,6 @@ dmypy.json
 
 # drivers folder
 drivers/
+
+#VC workspace
+*.code-workspace
