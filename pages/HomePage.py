@@ -3,6 +3,7 @@ from core.ui.WebUIElement import WebUIElement as UIElement
 from core.ui.FrameElement import FrameElement
 from selenium.webdriver.common.by import By
 
+#TO-DO: migrate responsibility to another Page
 class HomePage(BasePage):
 
     __parentFrame1 = FrameElement(By.ID,'IF1')
@@ -22,15 +23,3 @@ class HomePage(BasePage):
 
     def getIFramePracticeOption(self):
         return UIElement(By.XPATH,'//a[contains(text(), "IFrame practice page")]')
-        
-    def getAboutUs(self):
-        return UIElement(By.ID,'about')
-
-    def getQuotes(self):
-        return UIElement(By.XPATH,'//a[contains(text(),"Quotes")]')
-
-    def linkLearnMore(self):
-        return UIElement(By.CLASS_NAME,'readmore')
-
-    def linkStatus(self):
-        return UIElement(By.XPATH,'//a[contains(text(),"Status")]')
