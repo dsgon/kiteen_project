@@ -62,7 +62,7 @@ class BaseElement (ABC):
             Indicate if an element is present or visible on the current page.
             This method use a default value to withWait param to wait for this element (value = True).
             
-            The visible value is a flag to find Present (visible=False) or Visible (visible=True)
+            The visible value is a flag to find the current element  presence (visible=False) or visibility (visible=True)
 
             @param withWait : bool
             @param visible : bool
