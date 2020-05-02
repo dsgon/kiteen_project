@@ -43,14 +43,14 @@ class WebDriver(object):
                 firefoxProfile.set_preference('browser.privatebrowsing.autostart',ConfigHelper.incognito)
             if(ConfigHelper.headless):
                 firefoxOptions.set_headless()
-            cls.__instance = webdriver.Firefox(timeout=ConfigHelper.defaultWait,executable_path=ConfigHelper.driverPath,firefox_profile=firefoxProfile,firefox_options=firefoxOptions)
+            cls.__instance = webdriver.Firefox(timeout=ConfigHelper.defaultWait,executable_path=ConfigHelper.driverPath,firefox_profile=firefoxProfile,options=firefoxOptions)
         elif(ConfigHelper.browser == "chrome"):
             chromeoptions = webdriver.ChromeOptions()
             if(ConfigHelper.incognito):
                 chromeoptions.add_argument("--incognito")
             if(ConfigHelper.headless):
-                chromeoptions.set_headless()
-            cls.__instance = webdriver.Chrome(executable_path=ConfigHelper.driverPath,chrome_options=chromeoptions)
+                chromeoptions.add_argument("--headless")
+            cls.__instance = webdriver.Chrome(executable_path=ConfigHelper.driverPath,options=chromeoptions)
         elif(ConfigHelper.browser == "ie"):
             cls.__instance = webdriver.Ie(executable_path=ConfigHelper.driverPath,timeout=ConfigHelper.defaultWait)
         elif(ConfigHelper.browser == "edge"):
