@@ -3,6 +3,6 @@
     "driverPath": "./drivers/chromedriver.exe",
     "urlApp": "https://python.org",
     "defaultWait": 60,
-    "incognito": false,
-    "headless": false
+    "incognito": true,
+    "headless": true
 }
