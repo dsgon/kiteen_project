@@ -30,15 +30,22 @@ class WebUIElement (BaseElement):
         self._BaseElement__element = locator
         self._BaseElement__parentFrame = parentFrame
 
-    def click(self):
+    def click(self, withWait=False):
         """
             Perform a click action over the current element.
         """
-        self._BaseElement__get().click() 
+        self._BaseElement__get(withWait).click() 
 
     def isDisplayed(self):
         """
             Search for the visibility of the current element.
+            @return : bool
+        """
+        return self._BaseElement__exist(visible=True)
+
+    def isPresent(self):
+        """
+            Search for the presence of the current element.
             @return : bool
         """
         return self._BaseElement__exist()
