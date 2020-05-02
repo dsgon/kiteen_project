@@ -57,12 +57,15 @@ class BaseElement (ABC):
             tryCount+=1
         return None
 
-    def __exist(self, withWait=True):
+    def __exist(self, withWait=True, visible=False):
         """
-            Indicate if an element exist and can be found on a screen.
+            Indicate if an element is present or visible on the current page.
             This method use a default value to withWait param to wait for this element (value = True).
+            
+            The visible value is a flag to find Present (visible=False) or Visible (visible=True)
 
             @param withWait : bool
+            @param visible : bool
             @return bool
         """
         exists = False
@@ -86,16 +89,22 @@ class BaseElement (ABC):
                         self.__parentFrame.__exist()
             else:
                 if(not self.hasParent()):
-                    exists = self.__getDriverWait().\
-                    until(expected_conditions.\
-                        presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
+                    if(not visible):
+                        exists = self.__getDriverWait().until(expected_conditions.\
+                            presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
+                    else:
+                        exists = self.__getDriverWait().until(expected_conditions.\
+                            visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                 else:
                     if(not self.__parentFrame.hasParent()):
                         if(parentsFrame==None):
-                            self.__getDriver().switch_to.frame(self.__parentFrame.__get())
-                            exists = self.__getDriverWait().\
-                    until(expected_conditions.\
-                        presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
+                            if(not visible):
+                                self.__getDriver().switch_to.frame(self.__parentFrame.__get())
+                                exists = self.__getDriverWait().until(expected_conditions.\
+                                    presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
+                            else:
+                                exists = self.__getDriverWait().until(expected_conditions.\
+                                    visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                         else:
                             for parent in parentsFrame:
                                 parent.__exist()
