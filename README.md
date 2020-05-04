@@ -123,7 +123,7 @@ We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
-* **David Gonzalez** - *Initial work* - [dsgon](https://github.com/dsgon/) - [Twitter](https://twitter.com/__dsgon)
+* **David Gonzalez** - *Initial work* - [github](https://github.com/dsgon/) - [twitter](https://twitter.com/__dsgon)
 
 
 
