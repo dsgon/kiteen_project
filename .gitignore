@@ -107,3 +107,6 @@ drivers/
 
 #Geckodriver.log
 geckodriver.log
+
+#Allure results
+*/result/
