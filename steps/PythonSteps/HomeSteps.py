@@ -9,9 +9,6 @@ class PythonHomeSteps(BaseStep):
 
     @allure.step
     def clickOnAboutUs(self, withWait):
-        """
-            Click on 'About Us' option
-        """
         self.__page.getAboutUs().click(withWait)
         return self
 

@@ -1,7 +1,7 @@
 from Lib.abc import ABC
 
 from core.driver.WebDriver import WebDriver
-from core.config import ConfigHelper
+from core.config.ConfigHelper import ConfigHelper
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
@@ -12,6 +12,10 @@ import time
 
 class BaseElement (ABC):
 
+    """
+        BaseElement is an Abstract class that offers some methods to perform wait actions on Driver and return the result.
+    """
+
     __element = None
     __byType = None
     __parentFrame = None
@@ -19,16 +23,16 @@ class BaseElement (ABC):
     def __getDriver(self):
         """
             Call for the instance of WebDriver to return it.
-            @return WebDriver
+            :return: WebDriver
         """
         return WebDriver.getInstance()
 
     def __getDriverWait(self):
         """
             Call for Selenium WebDriver Wait to create a handle of elements with a wait. This wait is configured in the file config.json
-            @return WebDriverWait
+            :return: WebDriverWait
         """
-        return WebDriverWait(self.__getDriver(),ConfigHelper.defaultWait)
+        return WebDriverWait(self.__getDriver(),ConfigHelper.getInstance().getDefaultWait())
 
     def __get(self, withWait=False):
         """
@@ -36,8 +40,8 @@ class BaseElement (ABC):
             If this element has not withWait find it via find_element else will set on True the search with wait
             and will search the element with expected_conditions.presence_of_element_located.
 
-            @param withWait : bool (Default value is False)
-            @return WebElement
+            :param withWait: bool
+            :return: WebElement
         """
         tryCount = 0
         maxTries = 6
@@ -64,9 +68,9 @@ class BaseElement (ABC):
             
             The visible value is a flag to find the current element  presence (visible=False) or visibility (visible=True)
 
-            @param withWait : bool
-            @param visible : bool
-            @return bool
+            :param withWait: bool
+            :param visible: bool
+            :return: bool
         """
         exists = False
         parentsFrame = None

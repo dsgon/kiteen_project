@@ -6,17 +6,9 @@ class WebUIElement (BaseElement):
 
     """
         Class to handle the Selenium WebElement.
-        This class offer all methods of WebElement with exception handle
+        This class offer all methods of WebElement with exception handle.
+        This class inherits from BaseElement.
     """
-
-    def __init__(self, byType, locator):
-        """
-            WebUIElement constructor receives a By object and a locator string to perform actions over this element.
-            @param byTipe : By
-            @param locator: str
-        """
-        self._BaseElement__byType = byType
-        self._BaseElement__element = locator
 
     def __init__(self, byType, locator, parentFrame=None):
         """

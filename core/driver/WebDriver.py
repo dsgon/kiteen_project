@@ -1,5 +1,6 @@
 from selenium import webdriver
-from core.config import ConfigHelper
+from core.config.ConfigHelper import ConfigHelper
+
 
 class WebDriver(object):
 
@@ -23,7 +24,7 @@ class WebDriver(object):
         """
             Singleton pattern to create an instance of WebDriver in case that doesn't exist. 
             If exist an instance, return the same.
-            @return WebDriver
+            :return: WebDriver
         """
         if cls.__instance is None:
             cls.__instance = cls.__new__(cls)
@@ -34,31 +35,29 @@ class WebDriver(object):
         """
             This method creates an instance of WebDriver.
             This Webdriver is created with the settings that contain the file 'config.json'
-            @param cls : WebDriver
+            :param: WebDriver
         """
-        if(ConfigHelper.browser == "firefox"):
+        if(ConfigHelper.getInstance().getBrowser() == "firefox"):
             firefoxProfile = webdriver.FirefoxProfile()
             firefoxOptions = webdriver.FirefoxOptions()
-            if(ConfigHelper.incognito):
-                firefoxProfile.set_preference('browser.privatebrowsing.autostart',ConfigHelper.incognito)
-            if(ConfigHelper.headless):
-                firefoxOptions.set_headless()
-            cls.__instance = webdriver.Firefox(timeout=ConfigHelper.defaultWait,executable_path=ConfigHelper.driverPath,firefox_profile=firefoxProfile,options=firefoxOptions)
-        elif(ConfigHelper.browser == "chrome"):
+            firefoxProfile.set_preference('browser.privatebrowsing.autostart',ConfigHelper.getInstance().getIncognitoMode())
+            firefoxOptions.headless = ConfigHelper.getInstance().getHeadlessMode()
+            cls.__instance = webdriver.Firefox(timeout=ConfigHelper.getInstance().getDefaultWait(),executable_path=ConfigHelper.getInstance().getDriverPath(),firefox_profile=firefoxProfile,options=firefoxOptions)
+        elif(ConfigHelper.getInstance().getBrowser() == "chrome"):
             chromeoptions = webdriver.ChromeOptions()
-            if(ConfigHelper.incognito):
+            if(ConfigHelper.getInstance().getIncognitoMode()):
                 chromeoptions.add_argument("--incognito")
-            if(ConfigHelper.headless):
+            if(ConfigHelper.getInstance().getHeadlessMode()):
                 chromeoptions.add_argument("--headless")
-            cls.__instance = webdriver.Chrome(executable_path=ConfigHelper.driverPath,options=chromeoptions)
-        elif(ConfigHelper.browser == "ie"):
-            cls.__instance = webdriver.Ie(executable_path=ConfigHelper.driverPath,timeout=ConfigHelper.defaultWait)
-        elif(ConfigHelper.browser == "edge"):
-            cls.__instance = webdriver.Edge(executable_path=ConfigHelper.driverPath)
+            cls.__instance = webdriver.Chrome(executable_path=ConfigHelper.getInstance().getDriverPath(),options=chromeoptions)
+        elif(ConfigHelper.getInstance().getBrowser() == "ie"):
+            cls.__instance = webdriver.Ie(executable_path=ConfigHelper.getInstance().getDriverPath(),timeout=ConfigHelper.getInstance().getDefaultWait())
+        elif(ConfigHelper.getInstance().getBrowser() == "edge"):
+            cls.__instance = webdriver.Edge(executable_path=ConfigHelper.getInstance().getDriverPath())
         else:
-            raise Exception('Invalid Browser')
-        cls.__instance.set_page_load_timeout(ConfigHelper.defaultWait)
-        cls.__instance.get(ConfigHelper.urlApp)
+            raise AttributeError('Invalid Browser')
+        cls.__instance.set_page_load_timeout(ConfigHelper.getInstance().getDefaultWait())
+        cls.__instance.get(ConfigHelper.getInstance().getUrlApp())
 
     @classmethod
     def closeDriver(cls):
