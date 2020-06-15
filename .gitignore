@@ -104,3 +104,6 @@ drivers/
 
 #VC workspace
 *.code-workspace
+
+#Geckodriver.log
+geckodriver.log
