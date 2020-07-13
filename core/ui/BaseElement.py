@@ -10,6 +10,7 @@ from selenium.common.exceptions import StaleElementReferenceException , WebDrive
 from Lib import traceback
 import time
 
+
 class BaseElement (ABC):
 
     """
@@ -19,7 +20,8 @@ class BaseElement (ABC):
     __element = None
     __byType = None
     __parentFrame = None
-
+    __parentsList = []
+    
     def __getDriver(self):
         """
             Call for the instance of WebDriver to return it.
@@ -45,18 +47,63 @@ class BaseElement (ABC):
         """
         tryCount = 0
         maxTries = 6
-        while (tryCount <= maxTries):
+        while (tryCount < maxTries):
+            self.__getDriver().switch_to.default_content()
             try:
                 if (withWait == False):
-                    return self.__getDriver().find_element(self._BaseElement__byType,self._BaseElement__element)
+                    if (not self.hasParent()):
+                        return self.__getDriver().find_element(self.__byType,self.__element)
+                    else:
+                        if(not self.__parentFrame.hasParent()):
+                            self.__getDriver().switch_to.frame(self.__parentFrame.__get())
+                            return self.__getDriver().find_element(self.__byType,self.__element)
+                        else:
+                            parents = []
+                            element = self
+                            
+                            while(element.hasParent()):        
+                                element = element.__parentFrame
+                                parents.append(element)
+
+                            parents.reverse()
+
+                            for parent in parents:
+                                self.__getDriver().switch_to.frame(self.__getDriver().find_element(parent.__byType,parent.__element))
+
+                            element = self.__getDriver().find_element(self.__byType,self.__element)
+
+                            return element
                 else:
-                    return self.__getDriverWait().\
-                        until(expected_conditions.presence_of_element_located((self._BaseElement__byType,self._BaseElement__element)))
-            except StaleElementReferenceException:
-                print("Stale Element Reference Exception: " + self._BaseElement__element)
+                    if (not self.hasParent()):
+                        return self.__getDriverWait().\
+                            until(expected_conditions.presence_of_element_located((self._BaseElement__byType,self._BaseElement__element)))
+                    else:
+                        if(not self.__parentFrame.hasParent()):
+                            self.__getDriver().switch_to.frame(self.__parentFrame.__get())
+                            return self.__getDriverWait().\
+                            until(expected_conditions.presence_of_element_located((self._BaseElement__byType,self._BaseElement__element)))
+                        else:
+                            parents = []
+                            parent = self.__parentFrame
+
+                            while(parent.hasParent()):
+                                parents.append(parent)
+                                parent = parent.__parentFrame
+                            for parent in parents:
+                                self.__getDriver().switch_to.frame(parent.__get())
+
+                            element = self.__getDriverWait().\
+                                    until(expected_conditions.presence_of_element_located((self._BaseElement__byType,self._BaseElement__element)))
+                            
+                            for parent in parents:
+                                self.__getDriver().switch_to.default_content()
+                            return element
+                        
+            except StaleElementReferenceException as ser:
+                print("Stale Element Reference Exception: {}\n{}".format(self._BaseElement__element,ser))
                 time.sleep(0.5)
-            except NoSuchElementException:
-                print("No Such Element: " + self._BaseElement__element)
+            except NoSuchElementException as se:
+                print("No Such Element: {}\n{}".format(self._BaseElement__element, se.with_traceback))
                 time.sleep(0.5)
             tryCount+=1
         return None
@@ -73,7 +120,7 @@ class BaseElement (ABC):
             :return: bool
         """
         exists = False
-        parentsFrame = None
+        
         self.__getDriver().switch_to.default_content()
         try:
             if (not withWait):
@@ -81,15 +128,17 @@ class BaseElement (ABC):
                     exists = self.__get() != None
                 else:
                     if(not self.__parentFrame.hasParent()):
-                        if(parentsFrame==None):
+                        #TO-DO: Check me!
+                        if(len(self._BaseElement__parentsList)==0):
                             self.__getDriver().switch_to.frame(self.__parentFrame.__get())
                             exists = self.__get() != None
                         else:
-                            for parent in parentsFrame:
+                            for parent in self._BaseElement__parentsList:
                                 parent.__exist()
                                 parent.__getDriver().switch_to.frame(self.__parentFrame.__get())
                     else:
-                        parentsFrame.append(self.__parentFrame)
+                        #TO-DO: Check me!
+                        self._BaseElement__parentsList.append(self.__parentFrame)
                         self.__parentFrame.__exist()
             else:
                 if(not self.hasParent()):
@@ -101,30 +150,38 @@ class BaseElement (ABC):
                             visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                 else:
                     if(not self.__parentFrame.hasParent()):
-                        if(parentsFrame==None):
-                            if(not visible):
-                                self.__getDriver().switch_to.frame(self.__parentFrame.__get())
-                                exists = self.__getDriverWait().until(expected_conditions.\
-                                    presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
-                            else:
-                                exists = self.__getDriverWait().until(expected_conditions.\
-                                    visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
+                        if(not visible):
+                            self.__getDriver().switch_to.frame(self.__parentFrame.__get(withWait=True))
+                            exists = self.__getDriverWait().until(expected_conditions.\
+                                presence_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                         else:
-                            for parent in parentsFrame:
-                                parent.__exist()
-                                parent.__getDriver().switch_to.frame(self.__parentFrame.__get())
+                            self.__getDriver().switch_to.frame(self.__parentFrame.__get(withWait=True))
+                            exists = self.__getDriverWait().until(expected_conditions.\
+                                visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                     else:
-                        parentsFrame.append(self.__parentFrame)
-                        self.__parentFrame.__exist()
+                        parents = []
+                        parent = self.__parentFrame
+                        while(parent.hasParent()):
+                            parents.append(parent)
+                            parent = parent.__parentFrame
+                        for parent in parents:
+                            self.__getDriver().switch_to.frame(parent.__get(withWait=True))
+
+                        exists = self.__getDriverWait().until(expected_conditions.\
+                                    visibility_of_element_located((self._BaseElement__byType,self._BaseElement__element))) != None
                 
         except NoSuchElementException:
-           print("No Such Element: " + self._BaseElement__element)
+           print("No Such Element: {}".format(self._BaseElement__element))
         except TimeoutException:
-            print("TimeOutException: Unable to find element <"+self._BaseElement__element+"> in "+str(ConfigHelper.defaultWait)+" seg")
+            print("TimeOutException: Unable to find element <{}> in {} seg".format(self._BaseElement__element,ConfigHelper.getInstance().getDefaultWait()))
             traceback.print_exc()
+        self.__getDriver().switch_to.default_content()
         return exists
 
     def hasParent(self):
+        """
+            Verify if the current element has a Parent element (Frame Element)
+        """
         if (self.__parentFrame == None):
             return False
         else:
