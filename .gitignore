@@ -109,4 +109,4 @@ drivers/
 geckodriver.log
 
 #Allure results
-*/result/
+/report
