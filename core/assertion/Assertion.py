@@ -8,8 +8,8 @@ class Assertion():
     """
         Class to handle Assertions to do verifications in our Test Cases.
     """
-
-    def assertTrue(self,failedMessage,value):
+    @classmethod
+    def assertTrue(cls,failedMessage,value):
         """
             Verify that the input value is True. Otherwise, the Assertion will fail and take a ScreenShot automatically
             and add the Allure report the failed message
@@ -20,10 +20,11 @@ class Assertion():
         try:
             assert True == value
         except:
-            self.__on_failure_screesnshot()
+            cls.__on_failure_screesnshot()
             pytest.fail(failedMessage,False)
 
-    def assertFalse(self,failedMessage,value):
+    @classmethod
+    def assertFalse(cls,failedMessage,value):
         """
             Verify that the input value is False. Otherwise, the Assertion will fail and take a ScreenShot automatically
             and add the Allure report the failed message
@@ -34,10 +35,11 @@ class Assertion():
         try:
             assert False == value
         except:
-            self.__on_failure_screesnshot()
+            cls.__on_failure_screesnshot()
             pytest.fail(failedMessage,False)
 
-    def assertEquals(self,failedMessage='', expectedValue=None, actualValue=None):
+    @classmethod
+    def assertEquals(cls,failedMessage='', expectedValue=None, actualValue=None):
         """
             Verify that the value of the inputs is Equals. Otherwise, the Assertion will fail and take a ScreenShot automatically
             and add the Allure report the failed message
@@ -48,10 +50,11 @@ class Assertion():
         try:
             assert expectedValue == actualValue
         except:
-            self.__on_failure_screesnshot()
+            cls.__on_failure_screesnshot()
             pytest.fail("Not equals. Expected: '{}' but Actual is: '{}'. {}".format(expectedValue,actualValue,failedMessage),False)
 
-    def assertNotEquals(self,failedMessage='', expectedValue=None, actualValue=None):
+    @classmethod
+    def assertNotEquals(cls,failedMessage='', expectedValue=None, actualValue=None):
         """
             Verify that the value of the inputs is Not Equals. Otherwise, the Assertion will fail and take a ScreenShot automatically
             and add the Allure report the failed message
@@ -62,10 +65,11 @@ class Assertion():
         try:
             assert expectedValue != actualValue
         except:
-            self.__on_failure_screesnshot()
+            cls.__on_failure_screesnshot()
             pytest.fail("Equals. Expected: '{}' but Actual is: '{}'. {}".format(expectedValue,actualValue,failedMessage),False)
 
-    def __on_failure_screesnshot(self):
+    @classmethod
+    def __on_failure_screesnshot(cls):
         """
             Private method to take a Screenshot if an Assertion fails.
         """
