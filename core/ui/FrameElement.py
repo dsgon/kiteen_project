@@ -7,7 +7,5 @@ class FrameElement(UIElement):
         This class inherits from WebUIElement.
     """
 
-    def __init__(self, byType, locator, parent=None):
-        self._BaseElement__byType = byType
-        self._BaseElement__element = locator
-        self._BaseElement__parentFrame = parent
+    def __init__(self, byType="", locator="", parent=None):
+        super().__init__(byType,locator,parent)
