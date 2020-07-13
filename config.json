@@ -1,8 +1,8 @@
 {
     "browser": "chrome",
     "driverPath": "./drivers/chromedriver.exe",
-    "urlApp": "https://python.org",
-    "defaultWait": 60,
-    "incognito": true,
-    "headless": true
+    "urlApp": "http://demo.automationtesting.in/Index.html",
+    "defaultWait": 15,
+    "incognito": false,
+    "headless": false
 }
