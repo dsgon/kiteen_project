@@ -104,7 +104,8 @@ drivers/
 
 #VC workspace
 *.code-workspace
-.vscode/
+.vscode/*
+.vscode/settings.json
 
 #Geckodriver.log
 geckodriver.log
