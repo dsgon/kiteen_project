@@ -10,7 +10,7 @@ class WebUIElement (BaseElement):
         This class inherits from BaseElement.
     """
 
-    def __init__(self, byType, locator, parentFrame=None):
+    def __init__(self, byType="", locator="", parentFrame=None):
         """
             WebUIElement constructor receives a By object and a locator string to perform actions over this element 
             and a parentFrame.
@@ -21,6 +21,7 @@ class WebUIElement (BaseElement):
         self._BaseElement__byType = byType
         self._BaseElement__element = locator
         self._BaseElement__parentFrame = parentFrame
+        
 
     def click(self, withWait=False):
         """
@@ -88,3 +89,4 @@ class WebUIElement (BaseElement):
             Perform a click action over the current element using JavaScript
         """
         self._BaseElement__getDriver().execute_script("arguments[0].click();",self._BaseElement__get())
+
