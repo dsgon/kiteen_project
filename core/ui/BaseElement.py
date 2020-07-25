@@ -181,6 +181,7 @@ class BaseElement (ABC):
     def hasParent(self):
         """
             Verify if the current element has a Parent element (Frame Element)
+            :return: bool
         """
         if (self.__parentFrame == None):
             return False

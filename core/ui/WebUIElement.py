@@ -14,9 +14,9 @@ class WebUIElement (BaseElement):
         """
             WebUIElement constructor receives a By object and a locator string to perform actions over this element 
             and a parentFrame.
-            @param byTipe : By
-            @param locator: str
-            @param parentFrame : List<FrameElement>
+            :param byTipe : By
+            :param locator: str
+            :param parentFrame: FrameElement
         """
         self._BaseElement__byType = byType
         self._BaseElement__element = locator
@@ -32,14 +32,14 @@ class WebUIElement (BaseElement):
     def isDisplayed(self):
         """
             Search for the visibility of the current element.
-            @return : bool
+            :return: bool
         """
         return self._BaseElement__exist(visible=True)
 
     def isPresent(self):
         """
             Search for the presence of the current element.
-            @return : bool
+            :return: bool
         """
         return self._BaseElement__exist()
 
@@ -67,14 +67,14 @@ class WebUIElement (BaseElement):
     def setText(self, text):
         """
             Send the text receive into a textbox
-            @param text : str
+            :param text: str
         """
         self._BaseElement__get().send_keys(text)
 
     def getText(self):
         """
             Get the text of a element
-            @return str
+            :return: str
         """
         return self._BaseElement__get().text
 

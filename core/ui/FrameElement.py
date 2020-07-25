@@ -8,4 +8,11 @@ class FrameElement(UIElement):
     """
 
     def __init__(self, byType="", locator="", parent=None):
+        """
+            FrameElement constructor receives a By object and a locator string to perform actions over this element 
+            and a parentFrame.
+            :param byTipe : By
+            :param locator: str
+            :param parentFrame: FrameElement
+        """
         super().__init__(byType,locator,parent)
