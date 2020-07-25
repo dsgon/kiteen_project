@@ -1,5 +1,5 @@
 from pages.DemoQAPages.Menu import switchTo_page as page
-from steps.BaseSteps import BaseStep
+from core.steps.BaseSteps import BaseStep
 from core.assertion.Assertion import Assertion
 import allure
 
