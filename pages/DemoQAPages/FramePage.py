@@ -1,6 +1,6 @@
 from core.ui.WebUIElement import WebUIElement as UIElement
 from core.ui.FrameElement import FrameElement
-from selenium.webdriver.common.by import By
+from core.ui.By import By
 
 class FramePage():
 
