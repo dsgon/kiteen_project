@@ -4,6 +4,7 @@ from selenium import webdriver
 class FactoryDriver():
 
     __driver = None
+    __config = ConfigHelper.getInstance()
 
     def createDriver(self):
         """
@@ -11,27 +12,30 @@ class FactoryDriver():
             This Webdriver is created with the settings that contain the file 'config.json'
             :param: WebDriver
         """
-        if(ConfigHelper.getInstance().getBrowser() == "firefox"):
+        if(self.__config.getBrowser() == "firefox"):
             firefoxProfile = webdriver.FirefoxProfile()
             firefoxOptions = webdriver.FirefoxOptions()
-            firefoxProfile.set_preference('browser.privatebrowsing.autostart',ConfigHelper.getInstance().getIncognitoMode())
-            firefoxOptions.headless = ConfigHelper.getInstance().getHeadlessMode()
-            self.__driver = webdriver.Firefox(timeout=ConfigHelper.getInstance().getDefaultWait(),executable_path=ConfigHelper.getInstance().getDriverPath(),firefox_profile=firefoxProfile,options=firefoxOptions)
-        elif(ConfigHelper.getInstance().getBrowser() == "chrome"):
+            firefoxProfile.set_preference('browser.privatebrowsing.autostart',self.__config.getIncognitoMode())
+            firefoxOptions.headless = self.__config.getHeadlessMode()
+            self.__driver = webdriver.Firefox(timeout=self.__config.getDefaultWait(),executable_path=self.__config.getDriverPath(),firefox_profile=firefoxProfile,options=firefoxOptions)
+        elif(self.__config.getBrowser() == "chrome"):
             chromeoptions = webdriver.ChromeOptions()
-            if(ConfigHelper.getInstance().getIncognitoMode()):
+            if(self.__config.getIncognitoMode()):
                 chromeoptions.add_argument("--incognito")
-            if(ConfigHelper.getInstance().getHeadlessMode()):
+            if(self.__config.getHeadlessMode()):
                 chromeoptions.add_argument("--headless")
-            self.__driver = webdriver.Chrome(executable_path=ConfigHelper.getInstance().getDriverPath(),options=chromeoptions)
-        elif(ConfigHelper.getInstance().getBrowser() == "ie"):
-            self.__driver = webdriver.Ie(executable_path=ConfigHelper.getInstance().getDriverPath(),timeout=ConfigHelper.getInstance().getDefaultWait())
-        elif(ConfigHelper.getInstance().getBrowser() == "edge"):
-            self.__driver = webdriver.Edge(executable_path=ConfigHelper.getInstance().getDriverPath())
+            self.__driver = webdriver.Chrome(executable_path=self.__config.getDriverPath(),options=chromeoptions)
+        elif(self.__config.getBrowser() == "ie"):
+            self.__driver = webdriver.Ie(executable_path=self.__config.getDriverPath(),timeout=self.__config.getDefaultWait())
+        elif(self.__config.getBrowser() == "edge"):
+            self.__driver = webdriver.Edge(executable_path=self.__config.getDriverPath())
         else:
             raise AttributeError('Invalid Browser')
-        self.__driver.maximize_window()
-        self.__driver.get(ConfigHelper.getInstance().getUrlApp())
-        self.__driver.set_page_load_timeout(ConfigHelper.getInstance().getDefaultWait())
+        if (self.__config.getHeadlessMode()):
+            self.__driver.set_window_size(self.__config.getWindowSize()['X'],self.__config.getWindowSize()['Y'])
+        else:
+            self.__driver.maximize_window()
+        self.__driver.get(self.__config.getUrlApp())
+        self.__driver.set_page_load_timeout(self.__config.getDefaultWait())
         
         return self.__driver

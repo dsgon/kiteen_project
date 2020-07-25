@@ -15,6 +15,7 @@ class ConfigHelper:
     __defaultWait = None
     __incognito = False
     __headless = False
+    __windowSize= None
 
     @staticmethod
     def getInstance():
@@ -51,28 +52,54 @@ class ConfigHelper:
             self.__urlApp = self.__config['urlApp']
             self.__defaultWait = self.__config['defaultWait']
             self.__incognito = self.__config['incognito']
-            self.__headless = self.__config['headless']
-
-    def setUrlApp(self, url):
-        self.__urlApp = url
-
-    def setDefaultUrlApp(self):
-        self.__urlApp = self.__config['urlApp']
+            self.__headless = self.__config['headless']['enabled']
+            self.__windowSize = self.__config['headless']['window_size']
 
     def getUrlApp(self):
+        """
+            Return the current URL setted on the config.json file
+            :return: string
+        """
         return self.__urlApp
     
     def getBrowser(self):
+        """
+            Return the current Browser name setted on the config.json file
+            :return: string
+        """
         return self.__browser
 
     def getDriverPath(self):
+        """
+            Return the current Path setted on the config.json file for the webdriver
+            :return: string
+        """
         return self.__driverPath
 
     def getDefaultWait(self):
+        """
+            Return the current wait time setted on the config.json file for the Default Wait
+            :return: int
+        """
         return self.__defaultWait
 
     def getIncognitoMode(self):
+        """
+            Return the current Incognito mode setted on the config.json file
+            :return: bool
+        """
         return self.__incognito
 
     def getHeadlessMode(self):
+        """
+            Return the current Headless mode setted on the config.json file
+            :return: bool
+        """
         return self.__headless
+
+    def getWindowSize(self):
+        """
+            Return the desired window size for headless mode. This not apply to headless=True
+            :return: json 
+        """
+        return self.__windowSize

@@ -4,5 +4,11 @@
     "urlApp": "http://demo.automationtesting.in/Index.html",
     "defaultWait": 15,
     "incognito": false,
-    "headless": false
+    "headless": {
+        "enabled": false,
+        "window_size": {
+            "X": 1920,
+            "Y": 1080
+        }
+    }
 }
