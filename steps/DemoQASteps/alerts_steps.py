@@ -1,6 +1,6 @@
 from pages.DemoQAPages import AlertsPage as page
 from core.steps.BaseSteps import BaseStep
-from core.assertion.Assertion import Assertion
+from core.assertion import assertion
 import allure
 
 class AlertsSteps(BaseStep):
@@ -22,7 +22,7 @@ class AlertsSteps(BaseStep):
 
     @allure.step
     def verifyButtonAlertOK(self):
-        Assertion.assertTrue('Unable to find the button to display an alert box with OK',page.getButtonAlertOK().isDisplayed())
+        assertion.assertTrue('Unable to find the button to display an alert box with OK',page.getButtonAlertOK().isDisplayed())
         return self
 
     @allure.step
@@ -33,12 +33,12 @@ class AlertsSteps(BaseStep):
 
     @allure.step
     def verifyOkAndCancelOption(self):
-        Assertion.assertTrue('Unable to find the OK and Cancel option',page.getButtonAlertOKCancel().isDisplayed())
+        assertion.assertTrue('Unable to find the OK and Cancel option',page.getButtonAlertOKCancel().isDisplayed())
         return self
 
     @allure.step
     def verifyButtonAlertOKCancel(self):
-        Assertion.assertTrue('Unable to find the button to display an alert box with OK and Cancel options',page.getButtonAlertOKCancel().isDisplayed())
+        assertion.assertTrue('Unable to find the button to display an alert box with OK and Cancel options',page.getButtonAlertOKCancel().isDisplayed())
         return self
 
     @allure.step
@@ -49,7 +49,7 @@ class AlertsSteps(BaseStep):
 
     @allure.step
     def verifyButtonAlertTextbox(self):
-        Assertion.assertTrue('Unable to find the button to display an alert with Textbox',page.getButtonAlertTextbox().isDisplayed())
+        assertion.assertTrue('Unable to find the button to display an alert with Textbox',page.getButtonAlertTextbox().isDisplayed())
         return self
 
     @allure.step
@@ -66,5 +66,5 @@ class AlertsSteps(BaseStep):
     @allure.step
     def verifyMessage(self, message):
         expected_format = 'Hello {} How are you today'.format(message)
-        Assertion.assertEquals('The message is not equal:',expected_format,page.getMessageText().getText())
+        assertion.assertEquals('The message is not equal:',expected_format,page.getMessageText().getText())
         return self

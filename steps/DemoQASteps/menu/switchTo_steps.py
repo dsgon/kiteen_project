@@ -1,13 +1,13 @@
 from pages.DemoQAPages.Menu import switchTo_page as page
 from core.steps.BaseSteps import BaseStep
-from core.assertion.Assertion import Assertion
+from core.assertion import assertion
 import allure
 
 class SwitchToSteps(BaseStep):
 
     @allure.step
     def verifyFramesOption(self):
-        Assertion.assertTrue('Unable to find Frames option',page.getFrameOption().isDisplayed())
+        assertion.assertTrue('Unable to find Frames option',page.getFrameOption().isDisplayed())
         return self
 
     @allure.step
@@ -18,7 +18,7 @@ class SwitchToSteps(BaseStep):
 
     @allure.step
     def verifyAlertsOption(self):
-        Assertion.assertTrue('Unable to find Alerts option',page.getAlertsOption().isDisplayed())
+        assertion.assertTrue('Unable to find Alerts option',page.getAlertsOption().isDisplayed())
         return self
 
     @allure.step

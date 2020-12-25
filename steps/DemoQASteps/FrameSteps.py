@@ -1,6 +1,6 @@
 from pages.DemoQAPages.FramePage import FramePage as page
 from core.steps.BaseSteps import BaseStep
-from core.assertion.Assertion import Assertion
+from core.assertion import assertion
 import allure
 
 class FrameSteps(BaseStep):
@@ -10,7 +10,7 @@ class FrameSteps(BaseStep):
 
     @allure.step
     def verifySingleInput(self):
-        Assertion.assertTrue("Input is not Displayed",self.__page.getSingleInput().isDisplayed())
+        assertion.assertTrue("Input is not Displayed",self.__page.getSingleInput().isDisplayed())
         return self
 
     @allure.step
@@ -20,7 +20,7 @@ class FrameSteps(BaseStep):
 
     @allure.step
     def verifyIframeWithIframeButton(self):
-        Assertion.assertTrue("Button is not Displayed",self.__page.getButtonIframeWithIframe().isDisplayed())
+        assertion.assertTrue("Button is not Displayed",self.__page.getButtonIframeWithIframe().isDisplayed())
         return self
 
     @allure.step
@@ -30,7 +30,7 @@ class FrameSteps(BaseStep):
 
     @allure.step
     def verifyInputInFrames(self):
-        Assertion.assertTrue("Input is not Displayed",self.__page.getInputInFrames().isDisplayed())
+        assertion.assertTrue("Input is not Displayed",self.__page.getInputInFrames().isDisplayed())
         return self
 
     @allure.step

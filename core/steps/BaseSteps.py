@@ -1,5 +1,5 @@
 from core.driver.WebDriver import WebDriver as Driver
-from core.assertion.Assertion import Assertion
+from core.assertion import assertion
 from Lib import datetime  
 from Lib.abc import ABC
 import allure
@@ -43,7 +43,7 @@ class BaseStep (ABC):
             :param titleExpected: str
             :return: self
         """
-        Assertion().assertEquals(expectedValue=titleExpected,actualValue=self.getTitle())
+        assertion.assertEquals(expectedValue=titleExpected,actualValue=self.getTitle())
         return self
 
 

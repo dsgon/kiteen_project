@@ -1,13 +1,13 @@
 from pages.DemoQAPages import HomePage as page
 from core.steps.BaseSteps import BaseStep
-from core.assertion.Assertion import Assertion
+from core.assertion import assertion
 import allure
 
 class HomeSteps (BaseStep):
 
     @allure.step
     def verifyButtonSkipSingIn(self):
-        Assertion.assertTrue('Unable to find Skip Sing In button', page.getButtonSkipSingIn().isDisplayed())
+        assertion.assertTrue('Unable to find Skip Sing In button', page.getButtonSkipSingIn().isDisplayed())
         return self
 
     @allure.step
