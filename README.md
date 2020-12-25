@@ -1,6 +1,6 @@
 # Kiteen (Pallo) Project
 
-A framework to Automation Web based on Python, Pytest, and Allure Report for the following browsers: Chrome, Firefox, Edge (Chromium), Internet Explorer on Incognito mode and/or Headless mode
+A framework to Automation Web based on Python, Pytest, and Allure Report for the following browsers: Chrome, Firefox, Edge (Chromium) and Internet Explorer on Incognito mode and/or Headless mode
 
 ## Getting Started
 
@@ -75,13 +75,18 @@ For this version is not possible to run Edge (chromium) on headless or incognito
 >```
 
 ### Settings
-> To run our first tests we need to understand the file **config.json**. This file has the following attributes:
+> To run the first tests we need to understand the file **config.json**. This file has the following attributes:
 > - **browser** : *str* (a string name of your browser. Must be: "firefox", "chrome", "edge", "ie").
-> - **driverPath** : *str* (a string with the path where you put your weddriver. By default is: "./drivers/your_webdriver.exe").
-> - **urlApp** : *str* (a string with your url App to test, for example, "https://www.your-url-app.com".
+> - **driverPath** : *str* (a string with the path where you have your weddriver. We recommender: "./drivers/your_webdriver.exe").
+> - **urlApp** : *str* (a string with your url App to test. For example: "https://www.your-url-app.com".
 > - **defaultWait** : *int* (an integer with the time in seconds to wait for a load of all elements before doing any action. If an element doesn't is present or visible in this time your test case will fail).
-> - **incognito** : *bool* (a boolean value to run your test cases in mode Incognito/Private.true for executing in this mode, false to execute without this mode).
-> - **headless** : *bool* (a boolean value to run your test cases with visualize the window browser (headless). true for executing in this mode, false to execute without this mode). If you configure true and the browser doesn't support it (like edge chromium or internet explorer) all test cases will execute without these settings).
+> - **incognito** : *bool* (a boolean value to run your test cases in mode Incognito/Private. true for executing in this mode, false to execute without this mode).
+> - **headless** : *json* (a dict that contains attributes *enabled* and *window_size*)
+> - - **enabled** : *bool* (a boolean value to run your test cases without visualizing the window browser (headless). true for executing in this mode, false to execute without this mode). If you configure true and the browser doesn't support it (like edge chromium or internet explorer) all test cases will execute without these settings).
+> - - **window_size** : *json* (a dict that contains window size as X and Y axis. This parameter is only for headless mode).
+> - - - **X** : *int* (an integer for X axis value. For example: 800)
+> - - - **Y** : *int* (an integer for Y axis value. For example: 600)
+
 
 > An example of the *config.json* file:
 
@@ -90,10 +95,16 @@ For this version is not possible to run Edge (chromium) on headless or incognito
 >{
 >    "browser": "chrome",
 >    "driverPath": "./drivers/chromedriver.exe",
->    "urlApp": "https://python.org",
->    "defaultWait": 60,
->    "incognito": true,
->    "headless": true
+>    "urlApp": "http://demo.automationtesting.in/Index.html",
+>    "defaultWait": 15,
+>    "incognito": false,
+>    "headless": {
+>         "enabled": false,
+>         "window_size":{
+>             "X":1920,
+>             "Y":1080
+>         }
+>     }
 >}
 >```
 
